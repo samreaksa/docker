@@ -1,0 +1,26 @@
+version: '3'
+services:
+    app:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        container_name: rsam-laravel-api
+        restart: unless-stopped
+        tty: true
+        working_dir: /var/www
+        volumes: 
+            - ../src:/var/www
+
+    nginx:
+        image: nginx:latest
+        container_name: rsam-laravel-nginx
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            # - "443:443"
+        volumes:
+            - ../src:/var/www
+            - ./nginx:/etc/nginx/conf.d/
+        # environment:
+        #     - NGINX_HOST=monkeyidesign.test
+        #     - NGINX_PORT=80
